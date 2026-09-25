@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-"""UI layer: CustomTkinter windows (views) for the application."""
+"""Capa de interfaz: ventanas CustomTkinter (vistas) de la aplicación."""

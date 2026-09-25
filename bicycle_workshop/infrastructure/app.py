@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Composition root: wires the services, login window and main window."""
+"""Raíz de composición: conecta los servicios, la ventana de ingreso y la ventana principal."""
 
 import customtkinter as ctk
 
@@ -8,12 +8,13 @@ from bicycle_workshop.infrastructure.ui.main_window import BicycleWorkshopApp
 
 
 def main():
-    """Start the application showing the login screen first.
+    """Inicia la aplicación mostrando primero la pantalla de ingreso.
 
-    A single CTk root is reused for the whole app: after a successful login
-    the login widgets are cleared and the main system builds on the SAME
-    root. Creating a second CTk() after destroying the first one can hang
-    CustomTkinter on Windows, so we never do that.
+    Se reutiliza una única raíz CTk durante toda la aplicación: tras un
+    ingreso exitoso se eliminan los componentes de ingreso y el sistema
+    principal se construye sobre la MISMA raíz. Crear un segundo CTk()
+    después de destruir el primero puede bloquear CustomTkinter en Windows,
+    por lo cual nunca se hace.
     """
     ctk.set_appearance_mode("light")
     ctk.set_default_color_theme("green")
@@ -21,7 +22,7 @@ def main():
     app_root = ctk.CTk()
 
     def open_main_system():
-        # clear every login widget, keep the root alive
+        # elimina todos los componentes de ingreso y mantiene viva la raíz
         for child in app_root.winfo_children():
             child.destroy()
         app_root.title("Bicycle Workshop Control System")

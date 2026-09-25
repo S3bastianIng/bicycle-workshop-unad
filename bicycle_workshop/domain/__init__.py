@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-"""Domain layer: pure business entities with no GUI dependencies."""
+"""Capa de dominio: entidades puras de negocio sin dependencias de GUI."""

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Unit tests for the domain entities: Usuario and BicicletaTaller."""
+"""Pruebas unitarias de las entidades de dominio: Usuario y BicicletaTaller."""
 
 import unittest
 
@@ -7,7 +7,7 @@ from bicycle_workshop.domain.entities import BicicletaTaller, Usuario
 
 
 class UsuarioTest(unittest.TestCase):
-    """Tests for the Usuario login entity."""
+    """Pruebas de la entidad de ingreso Usuario."""
 
     def setUp(self):
         self.user = Usuario()
@@ -26,7 +26,7 @@ class UsuarioTest(unittest.TestCase):
 
 
 class BicicletaTallerTest(unittest.TestCase):
-    """Tests for the BicicletaTaller time/cost entity."""
+    """Pruebas de la entidad de tiempo y costo BicicletaTaller."""
 
     # -- _to_minutes / registrar_ingreso -----------------------------------
 

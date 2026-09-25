@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Unit tests for the application services: LoginService and WorkshopService."""
+"""Pruebas unitarias de los servicios de aplicación: LoginService y WorkshopService."""
 
 import unittest
 
@@ -8,7 +8,7 @@ from bicycle_workshop.domain.entities import BicicletaTaller
 
 
 class LoginServiceTest(unittest.TestCase):
-    """Tests for the LoginService use case."""
+    """Pruebas del caso de uso LoginService."""
 
     def setUp(self):
         self.service = LoginService()
@@ -32,7 +32,7 @@ class LoginServiceTest(unittest.TestCase):
 
 
 class WorkshopServiceTest(unittest.TestCase):
-    """Tests for the WorkshopService use case."""
+    """Pruebas del caso de uso WorkshopService."""
 
     def setUp(self):
         self.service = WorkshopService()

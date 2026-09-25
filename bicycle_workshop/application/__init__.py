@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-"""Application layer: use cases (services) - plain Python, no GUI."""
+"""Capa de aplicación: casos de uso (servicios); Python puro, sin GUI."""

@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-"""Exercise 1: Bicycle Workshop Control System (Clean Architecture).
+"""Ejercicio 1: Sistema de Control del Taller de Bicicletas (Arquitectura Limpia).
 
-Course: Programming (213023) - UNAD
-Phase 2 - Project proposal
+Curso: Programación (213023) - UNAD
+Fase 2 - Propuesta de proyecto
 
-This file is the thin entry point. The system is organized in layers:
-- bicycle_workshop.domain:     entities (User, BicycleWorkshop)
-- bicycle_workshop.application: use cases (LoginService, WorkshopService)
-- bicycle_workshop.infrastructure: GUI windows and composition root
+Este archivo es el punto de entrada ligero. El sistema está organizado en capas:
+- bicycle_workshop.domain:         entidades (User, BicycleWorkshop)
+- bicycle_workshop.application:    casos de uso (LoginService, WorkshopService)
+- bicycle_workshop.infrastructure: ventanas GUI y raíz de composición
 
-Run: python exercise1_bicycle_workshop.py
+Ejecutar: python exercise1_bicycle_workshop.py
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))

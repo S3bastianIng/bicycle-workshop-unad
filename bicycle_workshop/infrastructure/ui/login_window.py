@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Login window (CustomTkinter UI) - depends on LoginService only."""
+"""Ventana de ingreso (interfaz CustomTkinter); depende solo de LoginService."""
 
 import tkinter as tk
 
@@ -9,8 +9,9 @@ from bicycle_workshop.application.services import LoginService
 
 
 class LoginWindow:
-    """Modern dynamic login built with CustomTkinter: two-panel layout,
-    underline entries, inline error, shake effect and loading state."""
+    """Ingreso moderno y dinámico construido con CustomTkinter: diseño de dos
+    paneles, campos con subrayado, error en línea, efecto de vibración y
+    estado de carga."""
 
     BRAND = "#1b5e20"
     BRAND_ACCENT = "#2e7d32"
@@ -27,12 +28,12 @@ class LoginWindow:
         root.minsize(760, 420)
         root.resizable(False, False)
 
-        # -- global container ---------------------------------------------
+        # -- contenedor global ------------------------------------------------
         container = ctk.CTkFrame(root, fg_color="transparent")
         container.pack(fill="both", expand=True)
 
         # =================================================================
-        # LEFT: branding panel
+        # IZQUIERDA: panel de marca
         # =================================================================
         brand = ctk.CTkFrame(container, fg_color=self.BRAND,
                              corner_radius=0, width=300)
@@ -55,12 +56,12 @@ class LoginWindow:
                      font=ctk.CTkFont("Segoe UI", 10)).pack(pady=(18, 0))
 
         # =================================================================
-        # RIGHT: form panel
+        # DERECHA: panel de formulario
         # =================================================================
         form = ctk.CTkFrame(container, fg_color=self.BG, corner_radius=0)
         form.pack(side="left", fill="both", expand=True)
 
-        # discreet Exit button in the top-right of the form
+        # botón discreto Exit en la esquina superior derecha del formulario
         top_row = ctk.CTkFrame(form, fg_color="transparent")
         top_row.pack(fill="x", padx=48, pady=(18, 0))
         ctk.CTkButton(top_row, text="Exit",
@@ -79,21 +80,21 @@ class LoginWindow:
                      font=ctk.CTkFont("Segoe UI", 11)).pack(
             anchor="w", padx=48, pady=(2, 24))
 
-        # username (underline style: transparent field + bottom line)
+        # nombre de usuario (estilo con subrayado: campo transparente + línea inferior)
         ctk.CTkLabel(form, text="Username", text_color="#37474f",
                      font=ctk.CTkFont("Segoe UI", 11, "bold")).pack(
             anchor="w", padx=48)
         self._underline_entry(form, "username", "Enter your username",
                               secret=False, pady=(2, 22))
 
-        # password (underline style: transparent field + bottom line)
+        # contraseña (estilo con subrayado: campo transparente + línea inferior)
         ctk.CTkLabel(form, text="Password", text_color="#37474f",
                      font=ctk.CTkFont("Segoe UI", 11, "bold")).pack(
             anchor="w", padx=48)
         self._underline_entry(form, "password", "Enter your password",
                               secret=True, pady=(2, 2))
 
-        # show/hide password toggle
+        # interruptor para mostrar u ocultar la contraseña
         self.show_pwd = tk.BooleanVar(value=False)
         ctk.CTkCheckBox(form, text="Show password", variable=self.show_pwd,
                         command=self._toggle_password, corner_radius=6,
@@ -103,13 +104,13 @@ class LoginWindow:
                         hover_color="#388e3c").pack(
             anchor="w", padx=48, pady=(10, 4))
 
-        # inline error label (hidden by default)
+        # etiqueta de error en línea (oculta por defecto)
         self.error_label = ctk.CTkLabel(form, text="", text_color=self.ERROR,
                                         font=ctk.CTkFont("Segoe UI", 10,
                                                          "bold"))
         self.error_label.pack(anchor="w", padx=48, pady=(0, 6))
 
-        # Sign In button (dynamic: hover + loading state)
+        # botón Sign In (dinámico: resaltado + estado de carga)
         self.signin_btn = ctk.CTkButton(
             form, text="Sign In", command=self._validate_credentials,
             fg_color=self.BRAND_ACCENT, hover_color="#388e3c",
@@ -117,7 +118,7 @@ class LoginWindow:
             font=ctk.CTkFont("Segoe UI", 14, "bold"))
         self.signin_btn.pack(fill="x", padx=48, pady=(2, 0))
 
-        # subtle footer hint
+        # sugerencia discreta en el pie
         ctk.CTkLabel(form,
                      text="Default credentials: programacion / programacion",
                      text_color="#90a4ae",
@@ -126,16 +127,16 @@ class LoginWindow:
 
         root.bind("<Return>", lambda _e: self._validate_credentials())
 
-    # -- helpers ----------------------------------------------------------
+    # -- auxiliares ----------------------------------------------------------
 
     def _underline_entry(self, parent, name, placeholder, secret, pady):
-        """Create a transparent entry with only a bottom line (underline
-        style). The line turns green when the field is focused.
+        """Crea un campo transparente con solo una línea inferior (estilo con
+        subrayado). La línea se vuelve verde cuando el campo recibe el foco.
 
-        NOTE: no native ``placeholder_text`` is used. CustomTkinter's
-        placeholder machinery has been observed to eat keystrokes and
-        freeze the window on Windows, so the fields start empty; the
-        static "Username"/"Password" labels already explain the fields.
+        NOTA: no se usa ``placeholder_text`` nativo. Se ha observado que el
+        mecanismo de marcador de CustomTkinter omite pulsaciones de teclas y
+        bloquea la ventana en Windows, por lo cual los campos inician vacíos;
+        las etiquetas estáticas "Username"/"Password" ya explican los campos.
         """
         wrapper = ctk.CTkFrame(parent, fg_color="transparent")
         wrapper.pack(fill="x", padx=48, pady=pady)
@@ -147,7 +148,7 @@ class LoginWindow:
             text_color="#263238")
         entry.pack(fill="x")
 
-        # the underline is a thin frame sitting just below the entry
+        # el subrayado es un marco delgado ubicado justo debajo del campo
         line = ctk.CTkFrame(wrapper, height=2,
                             fg_color="#b0bec5", corner_radius=0)
         line.pack(fill="x", pady=(0, 0))
@@ -172,13 +173,13 @@ class LoginWindow:
         entry.bind("<FocusOut>", on_focus_out)
         entry.bind("<KeyRelease>", self._on_type)
 
-    # -- dynamic behaviour -------------------------------------------------
+    # -- comportamiento dinámico ---------------------------------------------
 
     def _on_type(self, _event=None):
-        # clear the inline error as soon as the user types again.
-        # NOTE: never re-bind here — re-binding <KeyRelease> on every
-        # keystroke fights with CustomTkinter's internal binds and can
-        # freeze the window on Windows.
+        # borra el error en línea tan pronto como el usuario vuelve a escribir.
+        # NOTA: nunca se vuelve a asociar el evento aquí; reasociar
+        # <KeyRelease> en cada pulsación interfiere con las asociaciones
+        # internas de CustomTkinter y puede bloquear la ventana en Windows.
         if self.error_label.cget("text"):
             self.error_label.configure(text="")
 
@@ -188,11 +189,11 @@ class LoginWindow:
         else:
             self.password_entry.configure(show="*")
 
-    # -- validation --------------------------------------------------------
+    # -- validación ----------------------------------------------------------
 
     def _validate_credentials(self):
-        """Dynamic validation: shake + inline error on failure; loading
-        state and transition on success."""
+        """Validación dinámica: vibración + error en línea ante un fallo;
+        estado de carga y transición ante el éxito."""
         username = self.username_var.get().strip()
         password = self.password_var.get().strip()
 
@@ -212,21 +213,21 @@ class LoginWindow:
         self.error_label.configure(text=message)
 
     def _shake(self):
-        """Small horizontal animation to signal a failed login."""
+        """Pequeña animación horizontal para indicar un ingreso fallido."""
         x, y = self.root.winfo_x(), self.root.winfo_y()
         for delta in (0, 6, -6, 4, -4, 0):
             self.root.geometry(f"760x420+{x + delta}+{y}")
             self.root.update_idletasks()
 
     def _grant_access(self):
-        """Brief loading state, then hand over to the main system."""
+        """Breve estado de carga y luego entrega el control al sistema principal."""
         self.signin_btn.configure(text="Signing in...", state="disabled",
                                   fg_color="#388e3c")
         self.root.update_idletasks()
         self.root.after(500, self._open_main)
 
     def _open_main(self):
-        # Do NOT destroy the application root here: CustomTkinter can hang
-        # on Windows when a new CTk() is created after destroying the old
-        # one. We hand the SAME alive root back to main().
+        # NO se destruye la raíz de la aplicación aquí: CustomTkinter puede
+        # bloquearse en Windows cuando se crea un nuevo CTk() después de
+        # destruir el anterior. Se devuelve la MISMA raíz activa a main().
         self.on_success()

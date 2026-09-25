@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
-"""Bicycle Workshop Control System (Clean Architecture package).
+"""Sistema de Control del Taller de Bicicletas (paquete de Arquitectura Limpia).
 
-Layers:
-- domain: pure business entities (Usuario, BicicletaTaller)
-- application: use cases (LoginService, WorkshopService)
-- infrastructure: GUI (CustomTkinter) and composition root
+Capas:
+- domain: entidades puras de negocio (Usuario, BicicletaTaller)
+- application: casos de uso (LoginService, WorkshopService)
+- infrastructure: GUI (CustomTkinter) y raíz de composición
 """
 
 __version__ = "1.0.0"
 
 
 def main():
-    """Launch the application (delegates to the composition root).
+    """Inicia la aplicación (delega a la raíz de composición).
 
-    Kept lazy so importing this package does not pull in tkinter;
-    the domain and application layers stay GUI-free.
+    Se mantiene la importación diferida para que importar este paquete no
+    cargue tkinter; las capas de dominio y aplicación permanecen libres de GUI.
     """
     from bicycle_workshop.infrastructure.app import main as _run
     return _run()

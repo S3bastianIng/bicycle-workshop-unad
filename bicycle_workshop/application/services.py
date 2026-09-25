@@ -1,24 +1,25 @@
 # -*- coding: utf-8 -*-
-"""Application services (use cases): plain Python, no GUI dependencies.
+"""Servicios de aplicación (casos de uso): Python puro, sin dependencias de GUI.
 
-These classes own the application state and rules that the GUI (view)
-delegates to. They must never import tkinter or customtkinter.
+Estas clases contienen el estado y las reglas de la aplicación a los que
+la GUI (vista) delega. Nunca deben importar tkinter ni customtkinter.
 """
 
 from bicycle_workshop.domain.entities import BicicletaTaller, Usuario
 
 
 class LoginService:
-    """Use case: validate login credentials."""
+    """Caso de uso: validar las credenciales de ingreso."""
 
     def __init__(self, user=None):
-        """Create the service, using a default ``Usuario`` when none is given."""
+        """Crea el servicio, usando un ``Usuario`` por defecto cuando no se indica uno."""
         self.user = user if user is not None else Usuario()
 
     def validate(self, username, password):
-        """Return True only for non-empty credentials that match.
+        """Retorna True solo para credenciales no vacías que coinciden.
 
-        Inputs are stripped; blank credentials never validate.
+        Las entradas se normalizan sin espacios en los extremos; las
+        credenciales vacías nunca se validan.
         """
         username = (username or "").strip()
         password = (password or "").strip()
@@ -28,21 +29,21 @@ class LoginService:
 
 
 class WorkshopService:
-    """Use case: manage the bicycles registered in the workshop."""
+    """Caso de uso: gestionar las bicicletas registradas en el taller."""
 
     def __init__(self):
-        self.bicycles = []          # internal list of BicicletaTaller objects
-        self.selected_index = None  # index of the currently selected bicycle
+        self.bicycles = []          # lista interna de objetos BicicletaTaller
+        self.selected_index = None  # índice de la bicicleta seleccionada actualmente
 
     def register_bicycle(self, serial, cost_str, entry_time_str):
-        """Register a new bicycle in the workshop.
+        """Registra una nueva bicicleta en el taller.
 
-        Raises:
-            ValueError: when the serial is empty, the cost is not a
-                positive number, or the entry time is invalid.
+        Lanza:
+            ValueError: cuando el número de serie está vacío, el costo no es
+                un número positivo o la hora de ingreso no es válida.
 
-        On success the new bicycle is appended and returned. It is NOT
-        auto-selected.
+        En caso de éxito, la nueva bicicleta se agrega y se retorna. NO se
+        selecciona automáticamente.
         """
         serial = serial.strip()
         if not serial:
@@ -57,23 +58,23 @@ class WorkshopService:
                 "The cost per hour must be a positive number.")
 
         bike = BicicletaTaller(serial, cost)
-        # entry time validation delegates to BicicletaTaller's own message
+        # la validación de la hora de ingreso se delega al mensaje propio de BicicletaTaller
         bike.registrar_ingreso(entry_time_str.strip())
 
         self.bicycles.append(bike)
         return bike
 
     def select_bicycle(self, index):
-        """Mark the bicycle at ``index`` as selected."""
+        """Marca como seleccionada la bicicleta ubicada en ``index``."""
         self.selected_index = index
 
     def calculate_total(self, exit_time_str):
-        """Calculate the total cost for the selected bicycle.
+        """Calcula el costo total de la bicicleta seleccionada.
 
-        Raises:
-            ValueError: when no bicycle is selected, the exit time is
-                empty, or the exit time is invalid (delegated to the
-                entity).
+        Lanza:
+            ValueError: cuando no hay bicicleta seleccionada, la hora de
+                salida está vacía o la hora de salida no es válida
+                (delegado a la entidad).
         """
         if self.selected_index is None:
             raise ValueError("Please select a bicycle from the list.")
@@ -86,7 +87,7 @@ class WorkshopService:
         return bike.calcular_total(exit_time_str)
 
     def remove_current(self):
-        """Remove the selected bicycle and reset the selection."""
+        """Elimina la bicicleta seleccionada y restablece la selección."""
         if self.selected_index is None:
             return
         self.bicycles.pop(self.selected_index)

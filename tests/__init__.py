@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-"""Unit tests for the bicycle workshop application."""
+"""Pruebas unitarias de la aplicación del taller de bicicletas."""

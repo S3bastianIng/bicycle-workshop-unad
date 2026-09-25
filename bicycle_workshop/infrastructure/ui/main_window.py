@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Main system window (CustomTkinter UI) - depends on WorkshopService only."""
+"""Ventana principal del sistema (interfaz CustomTkinter); depende solo de WorkshopService."""
 
 import tkinter as tk
 from tkinter import messagebox
@@ -10,7 +10,7 @@ from bicycle_workshop.application.services import WorkshopService
 
 
 class BicycleWorkshopApp:
-    """Main window of the bicycle control system (CustomTkinter)."""
+    """Ventana principal del sistema de control de bicicletas (CustomTkinter)."""
 
     def __init__(self, root, service=None):
         self.root = root
@@ -21,7 +21,7 @@ class BicycleWorkshopApp:
         root.minsize(660, 560)
         root.resizable(False, False)
 
-        # -- header ----------------------------------------------------------
+        # -- encabezado --------------------------------------------------------
         header = ctk.CTkFrame(root, fg_color="#1b5e20", corner_radius=0,
                               height=56)
         header.pack(fill="x")
@@ -32,7 +32,7 @@ class BicycleWorkshopApp:
                      font=ctk.CTkFont("Segoe UI", 15, "bold")).pack(
             side="left", padx=16)
 
-        # -- registration frame --------------------------------------------
+        # -- marco de registro -------------------------------------------------
         register_frame = ctk.CTkFrame(root, corner_radius=10, fg_color="white")
         register_frame.pack(fill="x", padx=14, pady=(14, 8))
 
@@ -44,7 +44,7 @@ class BicycleWorkshopApp:
         fields = ctk.CTkFrame(register_frame, fg_color="transparent")
         fields.pack(fill="x", padx=14, pady=(0, 12))
 
-        # serial
+        # número de serie
         ctk.CTkLabel(fields, text="Serial number:", text_color="#37474f",
                      font=ctk.CTkFont("Segoe UI", 10)).grid(
             row=0, column=0, sticky="w", padx=(0, 6))
@@ -53,7 +53,7 @@ class BicycleWorkshopApp:
                      height=34, corner_radius=6).grid(
             row=0, column=1, sticky="w", padx=(0, 12), pady=3)
 
-        # cost
+        # costo
         ctk.CTkLabel(fields, text="Cost per hour (USD):",
                      text_color="#37474f",
                      font=ctk.CTkFont("Segoe UI", 10)).grid(
@@ -63,7 +63,7 @@ class BicycleWorkshopApp:
                      height=34, corner_radius=6).grid(
             row=1, column=1, sticky="w", padx=(0, 12), pady=3)
 
-        # entry time
+        # hora de ingreso
         ctk.CTkLabel(fields, text="Entry time (HH:MM):",
                      text_color="#37474f",
                      font=ctk.CTkFont("Segoe UI", 10)).grid(
@@ -80,7 +80,7 @@ class BicycleWorkshopApp:
                       font=ctk.CTkFont("Segoe UI", 11, "bold")).grid(
             row=0, column=2, rowspan=3, padx=(12, 0))
 
-        # -- bicycles list frame -------------------------------------------
+        # -- marco de lista de bicicletas --------------------------------------
         list_frame = ctk.CTkFrame(root, corner_radius=10, fg_color="white")
         list_frame.pack(fill="both", expand=True, padx=14, pady=8)
 
@@ -89,7 +89,7 @@ class BicycleWorkshopApp:
                      font=ctk.CTkFont("Segoe UI", 13, "bold")).pack(
             anchor="w", padx=14, pady=(10, 4))
 
-        # a scrollable container where each bicycle is a selectable row
+        # contenedor desplazable donde cada bicicleta es una fila seleccionable
         self.list_container = ctk.CTkScrollableFrame(
             list_frame, fg_color="#f5f7f5", corner_radius=8)
         self.list_container.pack(fill="both", expand=True, padx=14,
@@ -100,7 +100,7 @@ class BicycleWorkshopApp:
                      font=ctk.CTkFont("Segoe UI", 10)).pack(
             side="bottom", pady=(0, 8))
 
-        # -- exit frame ------------------------------------------------------
+        # -- marco de salida ---------------------------------------------------
         exit_frame = ctk.CTkFrame(root, corner_radius=10, fg_color="white")
         exit_frame.pack(fill="x", padx=14, pady=(8, 14))
 
@@ -132,7 +132,7 @@ class BicycleWorkshopApp:
                                             "Segoe UI", 13, "bold"))
         self.total_label.pack(side="right", padx=(8, 4))
 
-        # -- EXIT APP BUTTON (modern outline, discreet) ----------------------
+        # -- BOTÓN EXIT APP (moderno con contorno, discreto) -------------------
         exit_app_frame = ctk.CTkFrame(root, fg_color="transparent")
         exit_app_frame.pack(fill="x", padx=14, pady=(0, 14))
 
@@ -144,10 +144,10 @@ class BicycleWorkshopApp:
                       border_color="#b0bec5",
                       font=ctk.CTkFont("Segoe UI", 11)).pack(side="right")
 
-    # -- actions ------------------------------------------------------------
+    # -- acciones --------------------------------------------------------------
 
     def _refresh_list(self):
-        """Rebuild the selectable rows from the current bicycle list."""
+        """Reconstruye las filas seleccionables a partir de la lista actual de bicicletas."""
         for widget in self.list_container.winfo_children():
             widget.destroy()
 
@@ -175,12 +175,12 @@ class BicycleWorkshopApp:
             row.pack(fill="x", pady=2, padx=2)
 
     def _select_bike(self, index):
-        """Highlight the selected bicycle row."""
+        """Resalta la fila de la bicicleta seleccionada."""
         self.service.select_bicycle(index)
         self._refresh_list()
 
     def _register_bicycle(self):
-        """Delegate registration to the service and refresh the list."""
+        """Delega el registro al servicio y actualiza la lista."""
         serial = self.serial_var.get().strip()
         cost_str = self.cost_var.get().strip()
         entry_time = self.entry_time_var.get().strip()
@@ -198,7 +198,7 @@ class BicycleWorkshopApp:
         self.entry_time_var.set("")
 
     def _calculate_total(self):
-        """Calculate and show the total cost for the selected bicycle."""
+        """Calcula y muestra el costo total de la bicicleta seleccionada."""
         exit_time = self.exit_time_var.get().strip()
 
         try:
@@ -217,7 +217,7 @@ class BicycleWorkshopApp:
             f"Total cost: ${total:.2f}"
         )
 
-        # remove the bike from the workshop list once the service is done
+        # retira la bicicleta de la lista del taller una vez finalizado el servicio
         self.service.remove_current()
         self.total_label.configure(text="Total:  $0.00")
         self._refresh_list()

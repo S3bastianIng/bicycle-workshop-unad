@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
-"""Domain entities: Usuario and BicicletaTaller (pure business logic, no GUI).
+"""Entidades de dominio: Usuario y BicicletaTaller (lógica pura de negocio, sin GUI).
 
-Logic copied exactly from the original single-file assignment; only the
-GUI-adjacent docstrings were touched.
+Lógica copiada exactamente de la asignación original de un solo archivo; solo
+se ajustaron las cadenas de documentación cercanas a la GUI.
 """
 
 
 class Usuario:
-    """Represents a system user with private credentials.
+    """Representa un usuario del sistema con credenciales privadas.
 
-    Attributes:
-        _usuario (str): private username
-        _password (str): private password
+    Atributos:
+        _usuario (str): nombre de usuario privado
+        _password (str): contraseña privada
 
-    Methods:
-        validar(usuario_ingresado, password_ingresada): returns True only
-        when both credentials match the stored values.
+    Métodos:
+        validar(usuario_ingresado, password_ingresada): retorna True solo
+        cuando ambas credenciales coinciden con los valores almacenados.
     """
 
     def __init__(self, usuario="programacion", password="programacion"):
@@ -23,24 +23,24 @@ class Usuario:
         self._password = password
 
     def validar(self, usuario_ingresado, password_ingresada):
-        """Return True only if the given credentials match."""
+        """Retorna True solo si las credenciales indicadas coinciden."""
         return self._usuario == usuario_ingresado and self._password == password_ingresada
 
 
 class BicicletaTaller:
-    """Represents a bicycle that enters a workshop for maintenance.
+    """Representa una bicicleta que ingresa al taller para mantenimiento.
 
-    Attributes:
-        _serial (str): bicycle serial number (private)
-        _hora_ingreso (float): time the bicycle entered, in 24h format
-                               converted to minutes (private)
-        _costo_por_hora (float): rate charged per hour (private)
+    Atributos:
+        _serial (str): número de serie de la bicicleta (privado)
+        _hora_ingreso (float): hora de ingreso de la bicicleta, en formato
+                               de 24 horas convertida a minutos (privado)
+        _costo_por_hora (float): tarifa cobrada por hora (privado)
 
-    Methods:
-        registrar_ingreso(hora): stores the entry time
-        registrar_salida(hora): registers the exit time
-        calcular_total(hora_salida): computes the final cost
-        obtener_serial(): returns the bicycle serial number
+    Métodos:
+        registrar_ingreso(hora): almacena la hora de ingreso
+        registrar_salida(hora): registra la hora de salida
+        calcular_total(hora_salida): calcula el costo final
+        obtener_serial(): retorna el número de serie de la bicicleta
     """
 
     def __init__(self, serial, costo_por_hora):
@@ -48,14 +48,14 @@ class BicicletaTaller:
         self._hora_ingreso = None
         self._costo_por_hora = costo_por_hora
 
-    # -- helpers ------------------------------------------------------------
+    # -- auxiliares ----------------------------------------------------------
 
     @staticmethod
     def _to_minutes(time_str):
-        """Convert a 'HH:MM' string into total minutes (int).
+        """Convierte una cadena 'HH:MM' a minutos totales (int).
 
-        Raises:
-            ValueError: when the format is not valid.
+        Lanza:
+            ValueError: cuando el formato no es válido.
         """
         try:
             parts = time_str.strip().split(":")
@@ -72,16 +72,16 @@ class BicicletaTaller:
                 "(e.g. 09:30 or 14:05)."
             )
 
-    # -- public methods -----------------------------------------------------
+    # -- métodos públicos ----------------------------------------------------
 
     def registrar_ingreso(self, hora):
-        """Store the entry time of the bicycle."""
+        """Almacena la hora de ingreso de la bicicleta."""
         self._hora_ingreso = self._to_minutes(hora)
 
     def registrar_salida(self, hora):
-        """Register the exit time of the bicycle.
+        """Registra la hora de salida de la bicicleta.
 
-        Validates that the exit time is greater than the entry time.
+        Valida que la hora de salida sea posterior a la hora de ingreso.
         """
         if self._hora_ingreso is None:
             raise ValueError("No entry time registered for this bicycle.")
@@ -96,20 +96,20 @@ class BicicletaTaller:
         return exit_time
 
     def calcular_total(self, hora_salida):
-        """Calculate the final cost of the maintenance service.
+        """Calcula el costo final del servicio de mantenimiento.
 
-        Cost = elapsed hours * cost per hour.
+        Costo = horas transcurridas * costo por hora.
         """
         exit_time = self.registrar_salida(hora_salida)
         elapsed_hours = (exit_time - self._hora_ingreso) / 60.0
         return round(elapsed_hours * self._costo_por_hora, 2)
 
     def obtener_serial(self):
-        """Return the bicycle serial number."""
+        """Retorna el número de serie de la bicicleta."""
         return self._serial
 
     def obtener_hora_ingreso(self):
-        """Return the entry time as a HH:MM string (for display)."""
+        """Retorna la hora de ingreso como cadena HH:MM (para mostrar)."""
         if self._hora_ingreso is None:
             return "--:--"
         h = self._hora_ingreso // 60
@@ -117,5 +117,5 @@ class BicicletaTaller:
         return f"{h:02d}:{m:02d}"
 
     def obtener_costo_por_hora(self):
-        """Return the cost per hour."""
+        """Retorna el costo por hora."""
         return self._costo_por_hora
