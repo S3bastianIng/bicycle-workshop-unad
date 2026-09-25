@@ -132,17 +132,16 @@ class BicycleWorkshopApp:
                                             "Segoe UI", 13, "bold"))
         self.total_label.pack(side="right", padx=(8, 4))
 
-        # -- BOTÓN EXIT APP (moderno con contorno, discreto) -------------------
+        # -- BOTÓN EXIT APP (rojo sólido, siempre visible al pie) ---------------
         exit_app_frame = ctk.CTkFrame(root, fg_color="transparent")
         exit_app_frame.pack(fill="x", padx=14, pady=(0, 14))
 
         ctk.CTkButton(exit_app_frame, text="Exit",
                       command=lambda: self.root.destroy(),
-                      fg_color="transparent", hover_color="#f0f2f0",
-                      text_color="#546e7a", width=96, height=34,
-                      corner_radius=8, border_width=1,
-                      border_color="#b0bec5",
-                      font=ctk.CTkFont("Segoe UI", 11)).pack(side="right")
+                      fg_color="#c62828", hover_color="#e53935",
+                      text_color="white", width=120, height=36,
+                      corner_radius=8,
+                      font=ctk.CTkFont("Segoe UI", 11, "bold")).pack(side="right")
 
     # -- acciones --------------------------------------------------------------
 
